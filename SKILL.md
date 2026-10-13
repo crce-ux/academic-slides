@@ -134,6 +134,35 @@ PPT 标题 / 版式建议 / 页面文字 / 表格数据 /
 
 ---
 
+## 脚本
+
+随包自带（运行版；开发版与测试在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`）。
+
+> ⚠️ PPT 工具链那十个**互为本地依赖**（`sys.path` 本地导入），要**整个 `scripts/` 目录一起用**，不能只拿一个。
+
+**出片**
+
+| 脚本 | 干什么 |
+|---|---|
+| `scripts/ppt_init.py` | 起一个 PPT 项目骨架 |
+| `scripts/ppt_build.py` | 讲稿 → 分镜 → 渲染 → 导出，一条命令出片 |
+| `scripts/ppt_check.py` | 版面体检（溢出 / 越界 / 字号） |
+| `scripts/make_svg_skeletons.py` | 生成整页 SVG 骨架 |
+| `scripts/make_notes.py` | 生成讲稿备注 |
+| `scripts/render_svg.py` · `scripts/render_templates.py` | SVG / 模板渲染 |
+| `scripts/render_and_qa_pptx.py` | 渲染 PPTX 并质检 |
+| `scripts/ppt_kit.py` · `scripts/ppt_style.py` | 构件库与视觉规范（被上面几个 import，别单独删） |
+
+**交付前体检**
+
+| 脚本 | 干什么 |
+|---|---|
+| `scripts/check_assets.py` | 资产检查 |
+
+> ⚠️ `ppt_build.py` 依赖一个**不在本仓的合并层**（`ppt-master`）——缺它时渲染那一步会断。详见 `scripts/README.md`。
+
+---
+
 ## 参考文件
 
 | 文件 | 何时读 |
