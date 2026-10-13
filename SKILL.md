@@ -153,12 +153,6 @@ PPT 标题 / 版式建议 / 页面文字 / 表格数据 /
 | `scripts/render_and_qa_pptx.py` | 渲染 PPTX 并质检 |
 | `scripts/ppt_kit.py` · `scripts/ppt_style.py` | 构件库与视觉规范（被上面几个 import，别单独删） |
 
-**交付前体检**
-
-| 脚本 | 干什么 |
-|---|---|
-| `scripts/check_assets.py` | 资产检查 |
-
 > ⚠️ `ppt_build.py` 依赖一个**不在本仓的合并层**（`ppt-master`，Hugo He 的 MIT 项目）。
 > **先跑一次** `bash scripts/setup.sh` 把它拉到 `vendor/`（不进 git）。详见 `scripts/README.md`。
 
