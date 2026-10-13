@@ -159,7 +159,8 @@ PPT 标题 / 版式建议 / 页面文字 / 表格数据 /
 |---|---|
 | `scripts/check_assets.py` | 资产检查 |
 
-> ⚠️ `ppt_build.py` 依赖一个**不在本仓的合并层**（`ppt-master`）——缺它时渲染那一步会断。详见 `scripts/README.md`。
+> ⚠️ `ppt_build.py` 依赖一个**不在本仓的合并层**（`ppt-master`，Hugo He 的 MIT 项目）。
+> **先跑一次** `bash scripts/setup.sh` 把它拉到 `vendor/`（不进 git）。详见 `scripts/README.md`。
 
 ---
 

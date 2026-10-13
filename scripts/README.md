@@ -33,7 +33,16 @@
 | 项 | 说明 |
 |---|---|
 | `openpyxl` / `Pillow` / `lxml` | 部分脚本需要 |
-| **`ppt-master`** | 🔴 **不在本仓**——`ppt_build.py` 的合并层依赖它；缺了渲染那一步会断 |
+| **`ppt-master`** | 🔴 **不在本仓**——`ppt_build.py` 的合并层依赖它。先跑 `bash scripts/setup.sh` 拉到 `vendor/` |
 | 浏览器 / headless chrome | `render_*` 系列要用 |
 
-**`ppt_build.py` 不是自包含的。** 用之前先确认 `ppt-master` 在环境里。
+## 先跑 setup
+
+```bash
+bash scripts/setup.sh      # 拉 ppt-master 到 vendor/（不进 git）+ 装 pip 依赖
+```
+
+`ppt-master` 是 [Hugo He](https://github.com/hugohe3/ppt-master) 的第三方 **MIT** 项目，731 MB。
+本仓库**不分发它**——只放一个脚本，用的时候自己拉。
+
+`ppt_build.py` 会自动在 `vendor/` 下找到合并层；也可以用环境变量 `PPT_MASTER=<...>/svg_to_pptx.py` 指到别处。
