@@ -1,5 +1,8 @@
 # talk-readiness
 
+[![Structure](https://github.com/crce-ux/talk-readiness/actions/workflows/structure.yml/badge.svg)](https://github.com/crce-ux/talk-readiness/actions/workflows/structure.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **学术汇报的「讲者侧」把关**
 
 PPT 做得再好，**讲的人没内化，一样会当场卡住**。
