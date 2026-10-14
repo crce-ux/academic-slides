@@ -1,6 +1,6 @@
 # scripts/
 
-**这里是运行版。正本在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`**——开发与测试都在那边。
+**这里是运行版。正本在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`**——开发与测试都在 `research-workflow`。
 
 改脚本请改总仓，再同步过来；**不要只改这里**。
 
@@ -15,7 +15,7 @@
 | `slide_fit.py` | **画之前的版面算术**：容量、带高之和 vs 区域高、**配图可读性**（图内字号 × 显示宽 ÷ 图宽 < 9px） |
 
 页的认法按真实产物：制作稿 `## S1 · 标题`、讲稿 `# 01_封面`（`--page-re` 可覆盖）。
-**它不查判断类**——四测试判据、磕巴判据、去味力度，那些仍归人。
+**它不查判断类**——四测试判据、磕巴判据、去味力度仍归人。
 
 ## 出片
 
