@@ -220,11 +220,22 @@ python scripts/render_and_qa_pptx.py   # 成品像素体检
 | 脚本 | 查什么 | 服务于 |
 |---|---|---|
 | `scripts/check_talk.py` | 待核清零 / 洗白词 / 每页 200–500 字 / 加粗 ≤3 / 总字数↔时长 / 制作稿七项 / 讲稿六样 | ①③⑦ |
+| `scripts/slide_fit.py` | **画之前的版面算术**：容量、带高之和 vs 区域高、**配图可读性**（图内字号 × 显示宽 ÷ 图宽 < 9px） | ③ |
 | `scripts/ppt_check.py` | 源体检（溢出 / 越界 / 字号） | ⑤ |
 | `scripts/render_and_qa_pptx.py` | 成品像素体检 | ⑥ |
 
 > `check_talk.py` 用法：`python check_talk.py 制作稿.md [--minutes 25]`。
 > **它不查判断类**（四测试判据、磕巴、去味力度）。
+
+```bash
+python scripts/slide_fit.py --chars 320 --size 20                     # 一张文字块
+python scripts/slide_fit.py --blocks "标题:24:12" "要点:20:180" --area 1200x525
+python scripts/slide_fit.py --image-font 14 --image-width 2000 --display-width 500
+```
+
+> ⭐ `slide_fit.py` 把手册里那段「画之前先算」变成一条命令。
+> **写在手册里的算术，做的时候没人会手算——于是还是等渲染。**
+> 特别是配图那条：在编辑器的缩放状态里**看不出**图里的字只剩 5px，只能算。
 
 **出片**
 
@@ -250,6 +261,7 @@ python scripts/render_and_qa_pptx.py   # 成品像素体检
 |---|---|
 | `references/comprehension-gate.md` | ② 理解确认四测试时——逐项做法与判据 |
 | `references/script-spec.md` | ③⑦ 写制作稿 / 讲稿时——规格、六样必带、版面算术预测、文献原图、去味分力度、九条红线 |
+| `references/examples.md` | **正反样例**：一页制作稿的坏 vs 好、讲稿六样对照、待核清零对照、配图三组对照 |
 
 ---
 
