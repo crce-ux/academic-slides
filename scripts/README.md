@@ -1,10 +1,10 @@
 # scripts/
 
-**这里是运行版。正本在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`**——开发与测试都在 `research-workflow`。
+**本目录是运行版。正本在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`**——开发与测试都在 `research-workflow`。
 
-改脚本请改总仓，再同步过来；**不要只改这里**。
+改脚本请改总仓，再同步过来；**不要只改本目录**。
 
-> ⚠️ **PPT 工具链这十个互为本地依赖**（互相 `sys.path.insert` + import），
+> ⚠️ **PPT 工具链的十个脚本互为本地依赖**（互相 `sys.path.insert` + import），
 > 要**整个目录一起用**，单独拷一个出去会 import 失败。
 
 ## 讲者侧机检
@@ -61,4 +61,4 @@ python scripts/selfcheck.py --strict   # 结构警告也算失败（CI 用这个
 ```
 
 查三样：**结构**（官方规范）· **语法**（逐个编译 `scripts/*.py`）· **依赖**（哪些脚本要装第三方库，只报不判）。
-下载本 skill 后想确认「东西是齐的、没坏的」，跑这一条就够。
+下载本 skill 后想确认「东西是齐的、没坏的」，跑 `selfcheck.py` 就够。
