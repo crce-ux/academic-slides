@@ -13,9 +13,9 @@
 ①  待核清零          内部工作标记扫成 0 —— 它们不得走到台上
 ②  理解确认（G3）     闭卷过四关 —— 「写完了」≠「懂了」
 ③  制作稿七项         把内容稿变成制作稿
-   版式选型           算容量 → 选配方 → 取骨架（pick_layout）
-④  分镜与 SVG 骨架     ppt_init → make_svg_skeletons
-⑤  渲染出片           ppt_build（一条命令）｜ ppt_check 源体检
+   模板与版式         选 ppt-master 模板 → 定每页版式
+④  分镜             每页讲什么、放什么图
+⑤  出片              ppt-master 生成 pptx ｜ ppt_check 源体检
 ⑥  成品体检           render_and_qa_pptx —— 像素级
 ⑦  讲稿与备注         讲稿规格六样 ｜ make_notes 生成 PPT 备注
 ⑧  上台前            念一遍找磕巴 ｜ 可压缩页与不可压页
@@ -76,8 +76,7 @@
 
 ```bash
 bash scripts/setup.sh                  # 一次性：拉 ppt-master 到 vendor/（不进 git）
-python scripts/pick_layout.py 制作稿.md --page P03   # 版式选型：按内容形态给候选配方
-python scripts/pick_layout.py 制作稿.md --page P03 --recipe 17   # 反向：查配方 17 缺什么素材
+python <ppt-master>/scripts/apply_template.py <项目> --root <模板根>   # 装模板
 python scripts/ppt_init.py             # 起项目骨架
 python scripts/ppt_check.py            # 源体检（ERROR=0 才导出）
 python scripts/ppt_build.py            # 讲稿 → 分镜 → 渲染 → 导出，一条命令出片
@@ -116,13 +115,10 @@ python scripts/selfcheck.py --strict
 ## 结构
 
 ```
-SKILL.md                                全链路八步 + 版式选型 + 规格 + Anti-Patterns
+SKILL.md                                全链路八步 + 模板与版式 + 规格 + Anti-Patterns
 references/comprehension-gate.md        四测试逐项做法 + 磕巴判据 + 未解决项处理
-references/script-spec.md               规格、版面算术、版式选型、文献原图、去味分力度、九条界限
-references/layout-recipes.md            32 个版式配方（适用条件、连接件分工、骨架对照）
-scripts/recipes.json                    结构化配方表（pick_layout.py 的数据源）
-assets/skeletons/                       21 个可复制整页骨架 + 缩略图墙
-scripts/                                工具链 11 个 + 机检 3 个 + 自检 1 个
+references/script-spec.md               规格、版面算术、模板与版式、文献原图、去味分力度、九条界限
+scripts/                                工具链 8 个 + 机检 3 个 + 自检 1 个
 ```
 
 ---

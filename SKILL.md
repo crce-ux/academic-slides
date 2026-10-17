@@ -1,10 +1,17 @@
 ---
 name: academic-slides
-description: 学术汇报 PPT 的制作全链路——从内容稿到能上台的成品。覆盖待核清零（内部标记不得泄漏进成品）、理解确认四测试（G3 门禁：术语表/数字表/追问/逐页一句话）、制作稿七项素材、分镜与 SVG 骨架、渲染出片、版面与像素双体检、讲稿与备注成文、上台前演练与磕巴判据。自带工具链（pick_layout / ppt_init / ppt_build / ppt_check / render_and_qa_pptx 等 11 个脚本），一条命令从讲稿出片。内置 32 个版式配方与 21 个可复制骨架，制作稿与配方可以互相匹配，不套模板。当用户说「做PPT」「组会汇报」「汇报PPT」「讲稿」「幻灯片」「PPT怎么排」「汇报准备」「答辩」「这份稿子能讲吗」「演练一遍」「PPT体检」，或要把一份内容稿做成学术汇报、要在上台前确认自己真的掌握了内容时使用。即使用户只说「下周要汇报」，只要涉及学术 PPT 的制作或讲者准备，就应主动调用。与 ppt-master / nature-paper2ppt 的关系：合并层依赖 ppt-master，本 skill 覆盖前后全链路。
+description: 做学术汇报 PPT 与上台准备。出片走 ppt-master，用其自带模板；本 skill 负责内容侧与讲者侧——待核清零、理解确认四测试（G3）、制作稿七项、分镜、版面算术、讲稿与备注、上台前演练。不自带骨架、不维护版式配方。当用户说「做PPT」「组会汇报」「汇报PPT」「讲稿」「幻灯片」「PPT怎么排」「汇报准备」「答辩」「这份稿子能讲吗」「演练一遍」「PPT体检」时使用。即使用户只说「下周要汇报」，只要涉及学术 PPT 的制作或讲者准备，就应主动调用。
 compatibility: 纯文本与本地脚本操作。出片依赖 ppt-master（第三方 MIT 项目，跑 scripts/setup.sh 拉到 vendor/）。像素体检需 Windows + 已装 PowerPoint。
 ---
 
 # 学术汇报 PPT · 制作全链路
+
+## 读什么
+
+- **出片 → 走 ppt-master**（自带模板）。本 skill 不生成 pptx。
+- 讲稿与制作稿规格 → `references/script-spec.md`
+- 理解确认四测试 → `references/comprehension-gate.md`
+- 版面算术 → `scripts/slide_fit.py`；讲者侧机检 → `scripts/check_talk.py`
 
 ## 本 skill 管什么
 
@@ -53,9 +60,9 @@ compatibility: 纯文本与本地脚本操作。出片依赖 ppt-master（第三
 ①  待核清零          内部工作标记扫成 0 —— 它们不得走到台上
 ②  理解确认（G3）     闭卷过四关 —— 「写完了」≠「懂了」
 ③  制作稿七项         把内容稿变成制作稿
-   版式选型           算容量 → 选配方 → 取骨架（pick_layout）
-④  分镜与 SVG 骨架    ppt_init → make_svg_skeletons
-⑤  渲染出片           ppt_build（一条命令）｜ ppt_check 源体检
+   模板与版式         选 ppt-master 模板 → 定每页版式
+④  分镜             每页讲什么、放什么图
+⑤  出片              ppt-master 生成 pptx ｜ ppt_check 源体检
 ⑥  成品体检           render_and_qa_pptx —— 像素级
 ⑦  讲稿与备注         讲稿规格六样 ｜ make_notes 生成 PPT 备注
 ⑧  上台前            念一遍找磕巴 ｜ 可压缩页与不可压页
@@ -148,35 +155,29 @@ PPT 标题 / 版式建议 / 页面文字 / 表格数据 /
 
 ---
 
-## 版式选型（③ 之后、出片之前）
+## 模板与版式（③ 之后、出片之前）
 
-**顺序固定：算容量 → 选配方 → 取骨架。**
+**出片走 ppt-master。模板从 ppt-master 自带库里选，不自建骨架、不维护配方。**
+
+顺序固定：**选模板 → 定版式 → 算放不放得下 → 填内容**。
 
 ```
-①  python scripts/slide_fit.py --blocks … --area …     放不放得下
-②  python scripts/pick_layout.py 制作稿.md --page P03   这一页像哪个版式
-③  复制 assets/skeletons/ 对应 SVG                      填内容
+①  选模板   ppt-master/templates/{decks,layouts,styles,brands}/*_index.json
+②  定版式   每页用模板里的哪个原型；同一原型可以重复用
+③  算容量   python scripts/slide_fit.py --blocks … --area …
+④  填内容   按 template_execution/<页>.text-slots.json 或占位符写
 ```
 
-**配方库**：`references/layout-recipes.md`——7 套模板、6 份独立 deck、123 页全量扫读提炼出的 32 个配方。
-可直接复制的整页骨架 21 个，在 `assets/skeletons/`；缩略图墙 `assets/skeletons/_预览总表.png`。
-
-**选型不是手工翻图。** `pick_layout.py` 只读内容字段（标题 / 页面文字 / 表格数据 / 图表说明），
-不读「版式建议」——拿作者自己写的答案当输入就成了自问自答。输出候选配方、命中理由、以及**缺料**。
+装模板：
 
 ```bash
-python scripts/pick_layout.py 制作稿.md --page P03            # 正向：给候选
-python scripts/pick_layout.py 制作稿.md --page P03 --recipe 17  # 反向：查配方 17 缺什么素材
-python scripts/pick_layout.py --audit                          # 配方表自检
+python <ppt-master>/scripts/apply_template.py <项目> --root <模板根>
 ```
 
-**反向那一步最实用。** 版面定不下来，常常不是版式问题，是素材没凑齐——
-配方要三个数字，这一页只写了一个，换版式也救不回来。
+### 两条不能违反的
 
-> ⚠️ 候选说明的是「像不像」，不是「该不该」。最终选型看这一页要说什么。
-> ⚠️ 制作稿里写的「版式建议」与候选对不上时：要么注明为什么另选，要么以内容为准改版式。
-
----
+- **镜像模板（`replication_mode: mirror`）不能装新内容。** 镜像的框按原文长度定死，装新内容会顶出去。换内容要用 `fidelity` / `standard` 模板。
+- **一个正文版式撑不住 26 页。** 内容结构不同就要换版式；表格压成方框等于删内容。
 
 ## ④⑤⑥ 出片与体检
 
@@ -303,7 +304,7 @@ python scripts/render_and_qa_pptx.py   # 成品像素体检
 
 随包自带（运行版；开发版与测试在 [`research-workflow`](https://github.com/crce-ux/research-workflow) 的 `scripts/`）。
 
-> ⚠️ PPT 工具链的十个脚本**互为本地依赖**（`sys.path` 本地导入），要**整个 `scripts/` 目录一起用**，不能只拿一个。
+> ⚠️ PPT 工具链的二十个脚本**互为本地依赖**（`sys.path` 本地导入），要**整个 `scripts/` 目录一起用**，不能只拿一个。
 
 **全链路机检**
 
@@ -330,13 +331,17 @@ python scripts/slide_fit.py --image-font 14 --image-width 2000 --display-width 5
 
 | 脚本 | 干什么 | 服务于 |
 |---|---|---|
-| `scripts/pick_layout.py` | **制作稿 → 版式配方匹配**：正向给候选与命中理由，反向查这一页缺什么素材；`--audit` 自检配方表 | 版式选型 |
 | `scripts/ppt_init.py` | 起一个 PPT 项目骨架 | ④ |
-| `scripts/make_svg_skeletons.py` | 生成整页 SVG 骨架 | ④ |
 | `scripts/ppt_build.py` | 讲稿 → 分镜 → 渲染 → 导出，一条命令出片 | ⑤ |
 | `scripts/render_svg.py` · `scripts/render_templates.py` | SVG / 模板渲染 | ⑤ |
 | `scripts/make_notes.py` | 生成讲稿备注 | ⑦ |
 | `scripts/ppt_kit.py` · `scripts/ppt_style.py` | 构件库与视觉规范（被上面几个 import，别单独删） | ④⑤ |
+
+**建库（拿到新模板时才跑）**
+
+| 脚本 | 干什么 | 服务于 |
+|---|---|---|
+| `scripts/pptx_shapes.py` | `.pptx` 直读（zipfile + ElementTree）；组变换、主题色、占位符帧继承 | 模板拆解 |
 
 **自带的结构/自检**：`scripts/selfcheck.py`（结构 + 语法 + 依赖）。
 
@@ -349,9 +354,6 @@ python scripts/slide_fit.py --image-font 14 --image-width 2000 --display-width 5
 
 | 文件 | 何时读 |
 |---|---|
-| `references/layout-recipes.md` | 版式选型时——32 个配方、适用条件、连接件分工、骨架对照 |
-| `scripts/recipes.json` | `pick_layout.py` 的数据源（结构化配方表，改配方时同步改） |
-| `assets/skeletons/` | 21 个可复制的整页骨架 + 缩略图墙 `_预览总表.png` |
 | `references/comprehension-gate.md` | ② 理解确认四测试时——逐项做法与判据 |
 | `references/script-spec.md` | ③⑦ 写制作稿 / 讲稿时——规格、六样必带、版面算术预测、文献原图、去味分力度、九条界限 |
 | `references/examples.md` | **正反样例**：一页制作稿的坏 vs 好、讲稿六样对照、待核清零对照、配图三组对照 |

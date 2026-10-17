@@ -4,7 +4,7 @@
 
 改脚本请改总仓，再同步过来；**不要只改本目录**。
 
-> ⚠️ **PPT 工具链的十个脚本互为本地依赖**（互相 `sys.path.insert` + import），
+> ⚠️ **PPT 工具链的脚本互为本地依赖**（互相 `sys.path.insert` + import），
 > 要**整个目录一起用**，单独拷一个出去会 import 失败。
 
 ## 讲者侧机检
@@ -24,7 +24,6 @@
 | `ppt_init.py` | 起一个 PPT 项目骨架 |
 | `ppt_build.py` | 讲稿 → 分镜 → 渲染 → 导出，一条命令出片 |
 | `ppt_check.py` | 版面体检（溢出 / 越界 / 字号） |
-| `make_svg_skeletons.py` | 生成整页 SVG 骨架 |
 | `make_notes.py` | 生成讲稿备注 |
 | `render_svg.py` | SVG 渲染 |
 | `render_templates.py` | 模板渲染（可拼联系表） |
