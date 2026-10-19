@@ -12,6 +12,22 @@ compatibility: 纯文本与本地脚本操作。出片依赖 ppt-master（第三
 - 讲稿与制作稿规格 → `references/script-spec.md`
 - 理解确认四测试 → `references/comprehension-gate.md`
 - 版面算术 → `scripts/slide_fit.py`；讲者侧机检 → `scripts/check_talk.py`
+- 开工前确认 → `references/confirm-spec.json` + `scripts/confirm.py`
+
+## 开工前确认（先做这一步）
+
+用户说要汇报，但没说清场合、时长、听众、交到什么程度——**先用网页表单问完，再动手**。
+
+```bash
+python scripts/confirm.py --spec references/confirm-spec.json --out <项目目录>/confirm_answers.json
+```
+
+- 命令打印一个本地地址，用户在浏览器里点选，提交后写成 JSON
+- 读到 `confirm_answers.json` 再开始 ①；退出码 2 表示超时未提交，回落到对话提问
+- 「其他要求」一栏留空的，当作没提
+- 表单只收事实与选项；**要判断的部分（讲什么、怎么讲）仍在对话里做**
+
+> ⚠️ 用户已经把场合与时长说清楚时，跳过本步。别为了走流程再问一遍。
 
 ## 本 skill 管什么
 

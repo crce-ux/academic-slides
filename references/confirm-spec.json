@@ -1,0 +1,60 @@
+{
+  "title": "汇报 PPT · 开工前确认",
+  "intro": "五个问题，答完我就按这个做。需要判断的部分我们在对话里聊。",
+  "questions": [
+    {
+      "id": "occasion",
+      "type": "radio",
+      "label": "场合",
+      "required": true,
+      "options": [
+        {"value": "组会汇报", "hint": "每周例会，同领域"},
+        {"value": "开题 / 中期", "hint": "评审组，会追问方法"},
+        {"value": "答辩", "hint": "委员会，时间固定"},
+        {"value": "学术会议", "hint": "同行，可能有提问"},
+        {"value": "其他"}
+      ]
+    },
+    {
+      "id": "minutes",
+      "type": "radio",
+      "label": "讲多久",
+      "required": true,
+      "options": [
+        {"value": "10 分钟"}, {"value": "15 分钟"}, {"value": "20 分钟"},
+        {"value": "30 分钟"}, {"value": "45 分钟以上"}
+      ]
+    },
+    {
+      "id": "audience",
+      "type": "multi",
+      "label": "听众（可多选）",
+      "required": true,
+      "options": [
+        {"value": "同领域导师", "hint": "可以省背景铺垫"},
+        {"value": "跨领域专家", "hint": "术语要展开"},
+        {"value": "临床医生", "hint": "重可用性"},
+        {"value": "研究生 / 学生", "hint": "重方法与入门"},
+        {"value": "统计或方法学人员", "hint": "会盯设计与分析"}
+      ]
+    },
+    {
+      "id": "deliverable",
+      "type": "radio",
+      "label": "这次要交到什么程度",
+      "required": true,
+      "options": [
+        {"value": "只要 pptx", "hint": "讲稿我自己想"},
+        {"value": "pptx + 讲稿"},
+        {"value": "先给内容稿和分镜，我确认后再出片"},
+        {"value": "完整走一遍：待核清零 → 理解确认 → 制作稿 → 出片 → 讲稿"}
+      ]
+    },
+    {
+      "id": "notes",
+      "type": "text",
+      "label": "其他要求（可留空）",
+      "placeholder": "例：必须用院里统一模板；有没有需要回避的内容；上次被问到的问题"
+    }
+  ]
+}
