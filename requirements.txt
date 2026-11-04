@@ -1,0 +1,2 @@
+Pillow>=10.0
+pywin32>=306; sys_platform == "win32"  # 需要本机安装 PowerPoint

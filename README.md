@@ -95,6 +95,32 @@ python scripts/check_talk.py 制作稿.md  # 全链路机检（待核/字数/加
 
 ---
 
+## 环境与依赖
+
+脚本可选。只用 `SKILL.md` 与 `references/` 时，不需要安装任何东西。
+
+- Python >= 3.9
+- 第三方依赖见 `requirements.txt`
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+source .venv/bin/activate     # macOS / Linux
+pip install -r requirements.txt
+```
+
+| 脚本 | 依赖 | 平台 |
+|---|---|---|
+| `scripts/ppt_check.py` | Pillow | 全平台 |
+| `scripts/render_and_qa_pptx.py` | Pillow、pywin32 | Windows + PowerPoint |
+| `scripts/render_templates.py` | Pillow、pywin32 | Windows + PowerPoint |
+
+依赖缺失时，自检脚本只报告、不中断。
+
+```bash
+python scripts/selfcheck.py
+```
+
 ## 自检
 
 ```bash
